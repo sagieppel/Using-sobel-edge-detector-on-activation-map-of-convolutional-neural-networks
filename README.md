@@ -1,2 +1,9 @@
 # Using-sobel-edge-detector-on-activation-map-of-convolutional-neural-networks
 Use the activation map (or feature map) of convolutional neural net (cnn) as images for sobel edge and gradient detector
+
+Using edge detector on deep layers of convolutional neural network. Use the feature map resulting from deep convolutional neural network as images for edge detector and display the results. (Note this code use Tensorflow implementation of VGG network by David Frossard, 2016. to use it you first need to download the pretrained model weights from here: http://www.cs.toronto.edu/~frossard/post/vgg16/ And put them in the code folder.)
+The response of convolutional neural network in each layer is a matrix of size DxDyd were d is the number of filters in this layer (can be considered as the layer depth). Dx and Dy are is the x,y dimension of the layer and is some fraction of the input image dimensions. By using the the response map of a given filter in in given layer (after RELU) as 2d image of dimension (Dx,Dy,1) and applying the sobel operator on this image, it possible to get the gradient/edge map of this filter in this layer. Summing the absolute value of the sobel operator of all feature in an image give the Total gradient/edge map for this layer , which seem to be rather similar to gradient map of input image.
+The code involve 3 steps: 1) Find the feature map of the of the image by applying the convolutional layers of the network. The network used here is the VGG implementation for Tensorflow by David Frossard. The weight for this pre trained net should be download from here:http://www.cs.toronto.edu/~frossard/post/vgg16/ and put in code directory.
+2) Use the sobel operator to to get gradient map for each filter in a given convolutional layer.
+3) Take the average of response map of all filters in a given layer to get the total edge map of this layer.
+4) Resize the edge map to feet the original image size.
